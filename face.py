@@ -3,6 +3,7 @@ import numpy as np
 
 path="./orl_faces/"
 
+own_path="./train_data/"
 class Face:
     def __init__(self):
         self.f_avg=None
@@ -29,7 +30,14 @@ class Face:
                     final_matrix = np.concatenate((final_matrix, img_c), axis=1)
 
         # Add own train images to MxN matrix, shape change to Mx(N+n), n is number of own images
-        img_train = cv2.imread("jiang1.jpeg", 0)
+        for i in range(1,6):
+            image_path=own_path+"yi"+str(i)+".png"
+            img_train = cv2.imread(image_path, 0)
+            img_train = cv2.resize(img_train, (92, 112))
+            img_train_c = np.reshape(img_train, (img_train.shape[0] * img_train.shape[1], 1))
+            final_matrix = np.concatenate((final_matrix, img_train_c), axis=1)
+
+        img_train = cv2.imread("jiang3.jpg", 0)
         img_train = cv2.resize(img_train, (92, 112))
         img_train_c = np.reshape(img_train, (img_train.shape[0] * img_train.shape[1], 1))
         final_matrix = np.concatenate((final_matrix, img_train_c), axis=1)
